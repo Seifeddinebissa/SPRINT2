@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Stagiaire</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}">Ajout des stagiaires</div>
+				<div class="card-header" th:if="${mode=='edit'}">Modification des stagiaires</div>
+
+				<div class="card-body">
+					<form th:action="@{saveStagiaire}" method="post">
+						<div class="form-group">
+							<label class="control-label" hidden>ID Stagiaire :</label> <input
+								type="hidden" name="idStagiaire" class="form-control"
+								th:value="${stagiaire.idStagiaire}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom :</label> <input
+								type="text" name="nom" class="form-control"  th:value="${stagiaire.nom}"/>
+								 <span th:errors= ${stagiaire.nom} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">CIN :</label> <input
+								type="text" name="cin" class="form-control" th:value="${stagiaire.cin}" />
+								 <span th:errors= ${stagiaire.cin} class="text-danger"> </span>
+								 
+						</div>
+						<div class="form-group">
+							<label class="control-label"> Societe:</label> <input
+								type="text" name="societe" class="form-control" th:value="${stagiaire.societe}"/>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Date début :</label> <input
+								type="date" name="dateDeb" class="form-control" th:value="${stagiaire.dateDeb}"/>
+								<span th:errors= ${stagiaire.dateDeb} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Date fin :</label> <input
+								type="date" name="dateFin" class="form-control" th:value="${stagiaire.dateFin}"/>
+								<span th:errors= ${stagiaire.dateFin} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Type de stage :</label> <select
+								name="type" class="form-control"
+								th:value="${stagiaire.type.idType}"
+								th:if="${!#strings.isEmpty(stagiaire.type)}">
+								<option th:each="t:${types}" th:if="${mode=='edit'}"
+									th:value="${t.idType}" th:text="${t.nom}"
+									th:selected="${ t.idType==stagiaire.type.idType}"></option>
+
+								<option th:each="t:${types}" th:if="${mode=='new'}"
+									th:value="${t.idType}" th:text="${t.nom}"></option>
+							</select>
+
+
+							<!-- Pour ne pas avoir d'erreurs si la catégorie est null on ajoute ce select -->
+							<select name="type" class="form-control"
+								th:if="${#strings.isEmpty(stagiaire.type)}">
+								<option th:each="t:${types}" th:value="${t.idType}"
+									th:text="${t.nom}"></option>
+							</select>
+
+						</div>
+						
+						<div>
+							<button type="submit" class="btn btn-primary">Valider</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

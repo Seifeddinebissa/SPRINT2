@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+.bg-custom {
+    background-color: #50a8ff;
+}
+
+</style>
+<head>
+<meta charset="utf-8">
+<title>Gestion des Stagiaires</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-custom">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#" style="color:white";>Gestion Stagiaires</a>
+		<!-- Links -->
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/}" style="color:white">Home</a></li>
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown" style="color:white"> Stagiaires </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{showCreate}" sec:authorize="hasAnyRole('ADMIN','AGENT')">Ajouter</a> <a
+						class="dropdown-item" th:href="@{ListeStagiaires}">Lister</a>
+				</div></li>
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown" style="color:white"> Types </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" sec:authorize="hasAnyRole('ADMIN','AGENT')" th:href="@{showCreateType}">Ajouter</a> <a
+						class="dropdown-item" th:href="@{ListeTypes}">Lister</a>
+				</div></li>
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown" style="color:white"> Users </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{showCreateUser}">Ajouter</a> <a
+						class="dropdown-item" th:href="@{/ListeUsers}">Lister</a>
+				</div></li>
+		</ul>
+
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown" style="color:white"> <span sec:authentication="name"></span> </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{login}" sec:authorize="!isAuthenticated()" >login</a> <a
+						class="dropdown-item" th:href="@{logout}" sec:authorize="isAuthenticated()">logout</a> <a class="dropdown-item"
+						href="#">Profile</a>
+				</div></li>
+		</ul>
+	</nav>
+	<section layout:fragment="Mycontent"></section>
+</body>
+</html>

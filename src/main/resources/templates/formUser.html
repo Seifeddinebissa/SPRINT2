@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des users</title>
+<script type="text/javascript">
+window.onload = function() {
+    document.getElementById('mylink').onclick = function() {
+    	
+       	  var pw1 = document.f.password.value;
+    	  var pw2 = document.f.password1.value;  
+    	  if(pw1 != pw2)  
+    	  {  
+    		  document.f.password.value="";
+    		  document.f.password1.value="";
+    		  alert("password incorrect");
+    		  return false;
+    	  }
+    	  else {
+    	        document.getElementById('myform').submit();
+    	        return false;
+    	  }
+
+    };
+};
+
+</script>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}">Ajout des utilisateur</div>
+				<div class="card-header" th:if="${mode=='edit'}">Modification des utilisateurs</div>
+				<div class="card-body">
+					<form th:action="@{saveUser}" name="f"  id="myform" method="post">
+						<div class="form-group">
+							<label class="control-label" hidden>ID User :</label> <input
+								type="hidden" name="user_id" class="form-control"
+								th:value="${user.user_id}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom :</label> <input
+								type="text" name="username" class="form-control"
+								th:value="${user.username}" /> <span
+								th:errors=${user.username} class="text-danger">
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Mot de passe :</label> <input
+								type="password" name="password" class="form-control"
+								th:value="${user.password}" /> <span
+								th:errors=${user.password} class="text-danger">
+							</span>
+
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">confirmer mot de passe :</label> <input
+								type="password" name="password1" class="form-control"
+								th:value="${user.password}" /> <span
+								th:errors=${user.password} class="text-danger">
+							</span>
+
+						</div>
+						
+						
+						<div class="form-group">
+							<label class="control-label">role :</label> 
+							<select  type="text" name="s" class="form-control"   >
+								<option th:each="r:${roles}" th:if="${mode=='edit'}"
+									th:value="${r.role_id}" th:text="${r.role}"></option>
+
+								<option th:each="r:${roles}" th:if="${mode=='new'}"
+									th:value="${r.role_id}" th:text="${r.role}"></option>
+							</select>
+						</div>
+						
+                       <div class="form-group">
+							<label class="control-label">Enabled or Disabled :</label> 
+							<select  type="text" name="ed" class="form-control"   >
+								<option th:value=true th:text="Enabled"></option>
+
+								<option
+									th:value=false th:text="Disabled"></option>
+							</select>
+						</div>
+						<div>
+							
+							<a href="#" id="mylink" class="btn btn-primary"> Valider </a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+
+<style type="text/css">
+.img{
+margin-top:100px
+}
+</style>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container">
+<div class="text-center img"><img alt="" width=600px th:src="@{/image/accessdenied.jpg}"></div>
+
+</div>
+</div>
+</body>
+</html>

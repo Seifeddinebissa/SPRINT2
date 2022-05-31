@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Stagiaires</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">Liste des Stagiaires</div>
+			<div class="card-body">
+					<form th:action="@{chercher}" method="get">
+						<div class="input-group">
+							<input type="search" class="form-control rounded col-lg-3"
+								name="type" placeholder="Search" aria-label="Search"
+								aria-describedby="search-addon" />
+							<button type="submit" class="btn btn-outline-primary">search</button>
+
+						</div>
+
+					</form>
+					<br>
+					<form th:action="@{chercherType}" method="get">
+					<div class="input-group">
+						<select class="custom-select col-lg-3" name="type" id="inputGroupSelect04">
+							<option th:each="t:${types}"  th:value="${t.idType}" th:text="${t.nom}"></option>
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Button</button>
+						</div>
+					</div>
+					</form>
+					<br>
+					<table class="table table-striped">
+					<tr>
+						<th>ID</th>
+						<th>Nom</th>
+						<th>CIN</th>
+						<th>Societe</th>
+						<th>Date debut</th>
+						<th>Date fin</th>
+						<th>Type de stage</th>
+						<th colspan = 2>Actions</th>
+					</tr>
+					<tr th:each="s:${stagiaires.content}">
+						<td th:text="${s.idStagiaire}"></td>
+						<td th:text="${s.nom}"></td>
+						<td th:text="${s.cin}"></td>
+						<td th:text="${s.societe}"></td>
+						<td th:text="${s.dateDeb}"></td>
+						<td th:text="${s.dateFin}"></td>
+						 <td   th:if= "${!#strings.isEmpty(s.type)}"   th:text="${s.type.nom}"></td>  
+              			 <td   th:if= "${#strings.isEmpty(s.type)}"     th:text="${'Pas de type'}"></td>
+						<td><a class="btn btn-danger"
+							onclick="return confirm('Etes-vous sûr ?')"
+							th:href="@{supprimerStagiaire(id=${s.idStagiaire}, page=${currentPage},size=${size})}" sec:authorize="hasRole('ADMIN')">Supprimer</a></td>
+							<td><a class="btn btn-success"
+								th:href="@{modifierStagiaire(id=${s.idStagiaire})}" sec:authorize="hasRole('ADMIN')">Editer</a></td>
+						</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+						th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+						th:href="@{ ListeStagiaires(page=${status.index}, size=${size} ) }"
+						th:text="${status.index }"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Gestion des Produits</title>
+<style type="text/css">
+.img{
+margin:190px 0px 0px 280px;
+
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+	<img th:src="@{/image/welcome.jpg}" class="img" width=1000px>
+	</div>
+</body>
+</html>
